@@ -128,13 +128,18 @@ curve=equity_curve(pr,capital)
 st.caption(f'Observed data: {asset_returns.index.min():%d %b %Y} – {asset_returns.index.max():%d %b %Y} · {len(asset_returns):,} daily returns · Adjusted close · All instruments priced in USD · Source: {"User-uploaded CSV" if uploaded is not None else "Yahoo Finance via yfinance"}')
 
 # Two balanced rows prevent Streamlit's metric ellipsis at laptop widths.
-p1,p2,p3=st.columns(3)
-p1.metric('Portfolio value',f'${curve.iloc[-1]:,.0f}')
-p2.metric('Total return',f'{stat["Total return"]:+.2%}')
-p3.metric('Annualized volatility',f'{stat["Volatility"]:.2%}')
-p4,p5=st.columns(2)
-p4.metric('Sharpe ratio',f'{stat["Sharpe"]:.2f}')
-p5.metric('Maximum drawdown',f'{stat["Max drawdown"]:.2%}')
+
+p1, p2, p3 = st.columns(3)
+
+p1.metric('Portfolio value', f'${curve.iloc[-1]:,.0f}')
+p2.metric('Total return', f'{stat["Total return"]:+.2%}')
+p3.metric('Annualized volatility', f'{stat["Volatility"]:.2%}')
+
+p4, p5, p6 = st.columns(3)
+
+p4.metric('Sharpe ratio', f'{stat["Sharpe"]:.2f}')
+p5.metric('Maximum drawdown', f'{stat["Max drawdown"]:.2%}')
+p6.metric('Assets tracked', f'{len(TICKERS)} ETFs')
 
 performance,risk,construction,stress,method=st.tabs(['Performance','Risk & attribution','Optimization','Stress testing','Methodology & export'])
 with performance:
